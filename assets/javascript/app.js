@@ -31,9 +31,20 @@ var triviagame = {
 
 //  This code will run as soon as the page loads.
 window.onload = function() {
-    $("#stop").on("click", stop);
-    $("#reset").on("click", reset);
-    $("#start").on("click", start);
+    displayQuestions();
+
+    // $("#stop").on("click", stop);
+    // $("#reset").on("click", reset);
+    // $("#start").on("click", start);
   };
 
-  
+  function displayQuestions() {
+    $("#question").text(triviagame.questionsArray[0].question);
+
+    for (let i = 0; i < triviagame.questionsArray[0].answers.length; i++) {
+        const element = triviagame.questionsArray[0].answers[i];
+        $("#answers").append("<li>" + element + "</li>");
+    }
+
+  }
+
