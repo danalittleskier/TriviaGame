@@ -29,9 +29,11 @@ var triviagame = {
 //  Variable that will hold our setInterval that runs the stopwatch
     var intervalId;
 
+    var index = 0;
+
 //  This code will run as soon as the page loads.
 window.onload = function() {
-    displayQuestions();
+    run();
 
     // $("#stop").on("click", stop);
     // $("#reset").on("click", reset);
@@ -39,12 +41,26 @@ window.onload = function() {
   };
 
   function displayQuestions() {
-    $("#question").text(triviagame.questionsArray[0].question);
-
-    for (let i = 0; i < triviagame.questionsArray[0].answers.length; i++) {
-        const element = triviagame.questionsArray[0].answers[i];
-        $("#answers").append("<li>" + element + "</li>");
+    $("#question").text(triviagame.questionsArray[index].question);
+    $("#answers").empty();
+    for (let i = 0; i < triviagame.questionsArray[index].answers.length; i++) {
+        const element = triviagame.questionsArray[index].answers[i];
+        $("#answers").append("<li class='list-group-item'>" + element + "</li>");
     }
+    console.log(triviagame.questionsArray.length);
+    if (index === triviagame.questionsArray.length -1){
+        stop();
+    }
+    index++;  
+  }
 
+  function run() {
+    clearInterval(intervalId);
+    intervalId = setInterval(displayQuestions, 3 * 1000);   
+       
+  }
+
+  function stop() {
+    clearInterval(intervalId);
   }
 
