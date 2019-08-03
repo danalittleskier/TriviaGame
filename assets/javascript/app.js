@@ -33,6 +33,7 @@ var triviagame = {
 
 //  This code will run as soon as the page loads.
 window.onload = function() {
+    displayQuestions();
     run();
 
     // $("#reset").on("click", reset);
@@ -74,6 +75,7 @@ window.onload = function() {
     clearInterval(clockInterval);
 
     intervalId = setInterval(displayQuestions, 10 * 1000);  
+    startTimer();
        
   }
 
@@ -82,10 +84,13 @@ window.onload = function() {
     clearInterval(clockInterval);
   }
 
-  function setTimer(){
+  function startTimer(){
     var seconds = 10;
     clockInterval = setInterval(function () {
         $("#clock").html(seconds);
-        i--;
+        seconds--;
+        if(seconds === 0){
+            seconds = 10;
+        }
     }, 1000);
   }

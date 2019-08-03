@@ -7,3 +7,9 @@
 #midsection {
     align-items: center;
 }
+#clock {
+    font-size: 2em;
+}
+.clockdiv {
+    align-content: flex-start;
+}
