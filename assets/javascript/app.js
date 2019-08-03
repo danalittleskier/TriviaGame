@@ -21,46 +21,71 @@ var triviagame = {
         {
             question:  "The highest peaks in the Western Hemisphere are found in which mountain range?",
             answers: ["The Rocky Mountains", "The Andes Mountain", "The Sierra Madres", "The Sierra Nevadas"],
-            correctAnswer: "Africa"
+            correctAnswer: "The Andes Mountain"
         },
         
     ]
 }
 //  Variable that will hold our setInterval that runs the stopwatch
     var intervalId;
-
+    var clockInterval;
     var index = 0;
 
 //  This code will run as soon as the page loads.
 window.onload = function() {
     run();
 
-    // $("#stop").on("click", stop);
     // $("#reset").on("click", reset);
     // $("#start").on("click", start);
   };
 
   function displayQuestions() {
+
     $("#question").text(triviagame.questionsArray[index].question);
     $("#answers").empty();
     for (let i = 0; i < triviagame.questionsArray[index].answers.length; i++) {
         const element = triviagame.questionsArray[index].answers[i];
-        $("#answers").append("<li class='list-group-item'>" + element + "</li>");
+        $("#answers").append("<li class='list-group-item' id='"+i+"'>" + element + "</li>");
     }
+
+    $("<LI>").on("click", function () {  
+        stop();
+        if($("<LI>").text === triviagame.questionsArray[index].correctAnswer){
+            triviagame.correct++;
+            console.log("One more correct");
+            run();
+        } else {
+            console.log("One more incorrect");
+            triviagame.incorect++;
+            run();
+        }
+    });
+
     console.log(triviagame.questionsArray.length);
     if (index === triviagame.questionsArray.length -1){
         stop();
     }
+
     index++;  
   }
 
   function run() {
     clearInterval(intervalId);
-    intervalId = setInterval(displayQuestions, 3 * 1000);   
+    clearInterval(clockInterval);
+
+    intervalId = setInterval(displayQuestions, 10 * 1000);  
        
   }
 
   function stop() {
     clearInterval(intervalId);
+    clearInterval(clockInterval);
   }
 
+  function setTimer(){
+    var seconds = 10;
+    clockInterval = setInterval(function () {
+        $("#clock").html(seconds);
+        i--;
+    }, 1000);
+  }
