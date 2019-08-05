@@ -1,6 +1,6 @@
 var triviagame = {
     correct: 0,
-    incorect: 0,
+    wrong: 0,
 
     questionsArray: [
         {
@@ -26,7 +26,7 @@ var triviagame = {
         
     ]
 }
-//  Variable that will hold our setInterval that runs the stopwatch
+//  Variable that will hold our setInterval
     var intervalId;
     var clockInterval;
     var index = 0;
@@ -36,31 +36,31 @@ window.onload = function() {
     displayQuestions();
     run();
 
-    // $("#reset").on("click", reset);
-    // $("#start").on("click", start);
+    $("button").on("click", function () {  
+        console.log("clicked button");
+        stop();
+        if($(this).text === triviagame.questionsArray[index].correctAnswer){
+            triviagame.correct++;
+            console.log("One more correct");
+            $("#correct").text("Correct: "+triviagame.correct);
+            run();
+        } else {
+            console.log("One more incorrect");
+            triviagame.wrong++;
+            $("#wrong").text("Wrong: "+triviagame.wrong);
+            run();
+        }
+     });
   };
 
-  function displayQuestions() {
 
+  function displayQuestions() { 
     $("#question").text(triviagame.questionsArray[index].question);
     $("#answers").empty();
     for (let i = 0; i < triviagame.questionsArray[index].answers.length; i++) {
         const element = triviagame.questionsArray[index].answers[i];
-        $("#answers").append("<li class='list-group-item' id='"+i+"'>" + element + "</li>");
+        $("#answers").append("<button type='button' class='btn btn-light btn-med btn-block' id='"+i+"'>" + element + "</button>");
     }
-
-    $("<LI>").on("click", function () {  
-        stop();
-        if($("<LI>").text === triviagame.questionsArray[index].correctAnswer){
-            triviagame.correct++;
-            console.log("One more correct");
-            run();
-        } else {
-            console.log("One more incorrect");
-            triviagame.incorect++;
-            run();
-        }
-    });
 
     console.log(triviagame.questionsArray.length);
     if (index === triviagame.questionsArray.length -1){
@@ -72,11 +72,8 @@ window.onload = function() {
 
   function run() {
     clearInterval(intervalId);
-    clearInterval(clockInterval);
-
-    intervalId = setInterval(displayQuestions, 10 * 1000);  
-    startTimer();
-       
+    intervalId = setInterval(displayQuestions, 20 * 1000);  
+    startTimer(); 
   }
 
   function stop() {
@@ -85,12 +82,12 @@ window.onload = function() {
   }
 
   function startTimer(){
-    var seconds = 10;
+    var seconds = 20;
     clockInterval = setInterval(function () {
         $("#clock").html(seconds);
         seconds--;
         if(seconds === 0){
-            seconds = 10;
+            seconds = 20;
         }
     }, 1000);
   }
