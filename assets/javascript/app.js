@@ -59,21 +59,21 @@ function displayQuestions() {
     
         if ($(this).attr('id') === $(this).attr('data-correct')) {
             triviagame.correct++;
-            setTimeout(displayAnswer(correctText, "congrats"), 1000);
+            displayAnswer(correctText, "congrats");
         } else {
             triviagame.wrong++;
-            setTimeout(displayAnswer(correctText, "bummer"), 1000);
+            displayAnswer(correctText, "bummer");
         }
 
         index++;
-
-    if(index < triviagame.questionsArray.length){
-        run();       
-    }
-    else {
-        clear();
-        setTimeout(displayAnswer(correctText, "end"), 1000);
-    }
+        if(index < triviagame.questionsArray.length){
+            clear();
+            run();       
+        }
+        else {
+            clear();
+            displayAnswer(correctText, "end");
+        }
     });
     
 }
@@ -84,7 +84,7 @@ function displayAnswer(correct, type) {
     if(type == "end"){
         $("#answers").append("<p class='card-text'>The End!");
     }
-    if (type === "congrats") {
+    else if (type === "congrats") {
         $("#answers").append("<p class='card-text'>Congrats!");
         $("#correct").text("Correct: " + triviagame.correct);
     }
@@ -97,17 +97,7 @@ function displayAnswer(correct, type) {
 
 }
 
-function run() {
-    clear();
-    startTimer();
-    intervalId = setInterval(displayQuestions, 10 * 1000);
 
-}
-
-function clear() {
-    clearInterval(intervalId);
-    clearInterval(clockInterval);
-}
 
 function startTimer() {
     var seconds = 10;
@@ -120,8 +110,17 @@ function startTimer() {
     }, 1000);
 }
 
+function clear() {
+    clearInterval(intervalId);
+    clearInterval(clockInterval);
+}
 
+function run() {
+    clear();
+    startTimer();
+    intervalId = setInterval(displayQuestions, 10 * 1000);
 
+}
 displayQuestions();
 
 run();
