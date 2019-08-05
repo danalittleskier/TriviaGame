@@ -10,6 +10,8 @@
 #clock {
     font-size: 2em;
 }
-/* .clockdiv {
-    align-content: flex-start;
-} */
+
+#correct-answer{
+    font: red;
+    text-align: center;
+}

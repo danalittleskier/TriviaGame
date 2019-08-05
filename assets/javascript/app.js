@@ -36,9 +36,7 @@ var triviagame = {
     var index = 0;
 
   function displayQuestions() { 
-    if (index === triviagame.questionsArray.length -1){
-        stop();
-    }
+    var correct = '';
     $("#question").text(triviagame.questionsArray[index].question);
     $("#answers").empty();
 
@@ -46,29 +44,43 @@ var triviagame = {
         const questionId = triviagame.questionsArray[index].qid;
         const correctAnswer = triviagame.questionsArray[index].correctAnswer;
         const element = triviagame.questionsArray[index].answers[i];
+        correct = triviagame.questionsArray[index].answers[correctAnswer];
         $("#answers").append("<button type='button' class='btn btn-light btn-med btn-block' data-correct='"+correctAnswer+"' id='"+i+"'>" + element + "</button>");
     }
     
     $("button").on("click", function () {  
         console.log("the button id "+$(this).attr('id'));
         console.log("the button correct "+$(this).attr('data-correct'));
-        stop();
         
         if($(this).attr('id') === $(this).attr('data-correct')){
             triviagame.correct++;
-            console.log("One more correct");
-            $("#correct").text("Correct: "+triviagame.correct);
+            setTimeout(displayCongratsAnswer(correct), 1000);    
             run();
         } else {
-            console.log("One more incorrect ");
             triviagame.wrong++;
-            $("#wrong").text("Wrong: "+triviagame.wrong);
+            setTimeout(displayWrongAnswer(correct), 1000);           
             run();
         }
      });
 
+     if (index === triviagame.questionsArray.length -1){
+        stop();
+    }
+
+  }
+  function displayCongratsAnswer(correct){
+    $("#answers").empty();
+    $("#answers").append("<p class='card-text'>Congrats!");
+    $("#answers").append("Correct answer <BR>"+correct+"</p>");
+    $("#correct").text("Correct: "+triviagame.correct);
     
-    index++;
+  }
+
+  function displayWrongAnswer(correct){
+    $("#answers").empty();
+    $("#answers").append("<span font='red'>Bummer Wrong Answer!</span>");
+    $("#answers").append("<BR>Correct answer <BR>"+correct+"<BR>");
+    $("#wrong").text("Wrong: "+triviagame.wrong);
   }
 
   function run() {
@@ -76,6 +88,7 @@ var triviagame = {
     clearInterval(clockInterval);
     intervalId = setInterval(displayQuestions, 20 * 1000);  
     startTimer(); 
+    index++;
   }
 
   function stop() {
