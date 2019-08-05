@@ -7,8 +7,10 @@
 #midsection {
     align-items: center;
 }
-#clock {
-    font-size: 2em;
+#clock,
+#wrong,
+#correct {
+    font-size: 1.5em;
 }
 
 #correct-answer{

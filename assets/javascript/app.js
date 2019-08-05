@@ -86,11 +86,11 @@ function displayAnswer(correct, type) {
     }
     else if (type === "congrats") {
         $("#answers").append("<p class='card-text'>Congrats!");
-        $("#correct").text("Correct: " + triviagame.correct);
+        $("#correct").text(triviagame.correct);
     }
     else {
         $("#answers").append("<p class='card-text'>Bummer Wrong Answer!");
-        $("#wrong").text("Wrong: " + triviagame.wrong);
+        $("#wrong").text(triviagame.wrong);
     }
 
     $("#answers").append("<BR>The correct answer is <BR> <font color='red'>" + correct + "</font><BR>");
