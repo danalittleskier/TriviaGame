@@ -53,10 +53,6 @@ function displayQuestions() {
     }
 
     $("button").on("click", function () {
-        clear();
-        console.log("the button id " + $(this).attr('id'));
-        console.log("the button correct " + $(this).attr('data-correct'));
-    
         if ($(this).attr('id') === $(this).attr('data-correct')) {
             triviagame.correct++;
             displayAnswer(correctText, "congrats");
@@ -67,12 +63,14 @@ function displayQuestions() {
 
         index++;
         if(index < triviagame.questionsArray.length){
-            clear();
-            run();       
+            clear(); 
+            setTimeout(displayQuestions, 2000);  
+            startTimer(10); 
+             
         }
         else {
             clear();
-            displayAnswer(correctText, "end");
+            setTimeout(displayAnswer(correctText, "end"), 2000);
         }
     });
     
@@ -81,7 +79,7 @@ function displayQuestions() {
 function displayAnswer(correct, type) {
 
     $("#answers").empty();
-    if(type == "end"){
+    if(type === "end"){
         $("#answers").append("<p class='card-text'>The End!");
     }
     else if (type === "congrats") {
@@ -99,8 +97,8 @@ function displayAnswer(correct, type) {
 
 
 
-function startTimer() {
-    var seconds = 10;
+function startTimer(seconds) {
+    // var seconds = 10;
     clockInterval = setInterval(function () {
         $("#clock").html(seconds);
         seconds--;
@@ -115,9 +113,9 @@ function clear() {
     clearInterval(clockInterval);
 }
 
-function run() {
+function run(sec) {
     clear();
-    startTimer();
+    startTimer(10);
     intervalId = setInterval(displayQuestions, 10 * 1000);
 
 }
