@@ -1,3 +1,6 @@
+body {
+    height: 900px;
+}
 .card {
     width: 35rem;
     align-content: center;

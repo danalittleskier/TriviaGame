@@ -2,6 +2,7 @@
 var intervalId;
 var clockInterval;
 var index = 0;
+var questionsAnswered = false;
 
 var triviagame = {
     correct: 0,
@@ -79,20 +80,24 @@ function displayQuestions() {
 function displayAnswer(correct, type) {
 
     $("#answers").empty();
-    if(type === "end"){
-        $("#answers").append("<p class='card-text'>The End!");
-    }
-    else if (type === "congrats") {
+   
+    if (type === "congrats") {
         $("#answers").append("<p class='card-text'>Congrats!");
         $("#correct").text(triviagame.correct);
+        $("#answers").append("<BR>The correct answer is <BR> <font color='red'>" + correct + "</font><BR>");
+    }
+    else if(type === "end"){
+        $("#answers").empty();
+        $("#answers").append("<p class='card-text'>The End!");
     }
     else {
         $("#answers").append("<p class='card-text'>Bummer Wrong Answer!");
         $("#wrong").text(triviagame.wrong);
+        $("#answers").append("<BR>The correct answer is <BR> <font color='red'>" + correct + "</font><BR>");
     }
+    
 
-    $("#answers").append("<BR>The correct answer is <BR> <font color='red'>" + correct + "</font><BR>");
-
+    
 }
 
 
