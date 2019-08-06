@@ -1,8 +1,8 @@
-//  Variable that will hold our setInterval
+//  Variable that will hold our intervals and questions index
 var intervalId;
 var clockInterval;
 var index = 0;
-var questionsAnswered = false;
+var questionAnswered = false;
 
 var triviagame = {
     correct: 0,
@@ -40,8 +40,8 @@ var triviagame = {
 
 function displayQuestions() {
     var correctText = '';
-    console.log("I'm in display");
-    
+    questionAnswered = false;
+
     $("#question").text(triviagame.questionsArray[index].question);
     $("#answers").empty();
 
@@ -50,10 +50,14 @@ function displayQuestions() {
         const correctAnswer = triviagame.questionsArray[index].correctAnswer;
         const element = triviagame.questionsArray[index].answers[i];
         correctText = triviagame.questionsArray[index].answers[correctAnswer];
+
+        //display array of answers in buttons with a data-correct value of the correct answer
         $("#answers").append("<button type='button' class='btn btn-light btn-med btn-block' data-correct='" + correctAnswer + "' id='" + i + "'>" + element + "</button>");
     }
 
     $("button").on("click", function () {
+        questionAnswered = true;
+        //check if the correct button was pressed and increase score accordingly
         if ($(this).attr('id') === $(this).attr('data-correct')) {
             triviagame.correct++;
             displayAnswer(correctText, "congrats");
@@ -103,7 +107,6 @@ function displayAnswer(correct, type) {
 
 
 function startTimer(seconds) {
-    // var seconds = 10;
     clockInterval = setInterval(function () {
         $("#clock").html(seconds);
         seconds--;
@@ -119,7 +122,6 @@ function clear() {
 }
 
 function run(sec) {
-    clear();
     startTimer(10);
     intervalId = setInterval(displayQuestions, 10 * 1000);
 
