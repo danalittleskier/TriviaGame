@@ -92,7 +92,7 @@ function displayAnswer(correct, type) {
     }
     else if(type === "end"){
         $("#answers").empty();
-        $("#answers").append("<p class='card-text'>The End!");
+        $("#answers").append("<p class='card-text ly-2'>The End!");
     }
     else {
         $("#answers").append("<p class='card-text'>Bummer Wrong Answer!");
