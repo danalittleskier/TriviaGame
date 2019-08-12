@@ -41,7 +41,7 @@ var triviagame = {
 function displayQuestions() {
     var correctText = '';
     questionAnswered = false;
-
+    
     $("#question").text(triviagame.questionsArray[index].question);
     $("#answers").empty();
 
@@ -54,7 +54,7 @@ function displayQuestions() {
         //display array of answers in buttons with a data-correct value of the correct answer
         $("#answers").append("<button type='button' class='btn btn-light btn-med btn-block' data-correct='" + correctAnswer + "' id='" + i + "'>" + element + "</button>");
     }
-
+    index++;
     $("button").on("click", function () {
         questionAnswered = true;
         //check if the correct button was pressed and increase score accordingly
@@ -65,19 +65,19 @@ function displayQuestions() {
             triviagame.wrong++;
             displayAnswer(correctText, "bummer");
         }
-
-        index++;
         if(index < triviagame.questionsArray.length){
             clear(); 
             setTimeout(displayQuestions, 2000);  
             startTimer(10); 
-             
         }
         else {
             clear();
             setTimeout(displayAnswer(correctText, "end"), 2000);
         }
+
+        
     });
+    
     
 }
 
@@ -88,19 +88,17 @@ function displayAnswer(correct, type) {
     if (type === "congrats") {
         $("#answers").append("<p class='card-text'>Congrats!");
         $("#correct").text(triviagame.correct);
-        $("#answers").append("<BR>The correct answer is <BR> <font color='red'>" + correct + "</font><BR>");
-    }
-    else if(type === "end"){
-        $("#answers").empty();
-        $("#answers").append("<p class='card-text ly-2'>The End!");
     }
     else {
         $("#answers").append("<p class='card-text'>Bummer Wrong Answer!");
         $("#wrong").text(triviagame.wrong);
-        $("#answers").append("<BR>The correct answer is <BR> <font color='red'>" + correct + "</font><BR>");
     }
     
+    $("#answers").append("<BR>The correct answer is <BR> <font color='red'>" + correct + "</font><BR>");
 
+    if(type === "end"){
+        $("#answers").append("<br><p class='card-text ly-2'>The End!");
+    }
     
 }
 
@@ -121,7 +119,7 @@ function clear() {
     clearInterval(clockInterval);
 }
 
-function run(sec) {
+function run() {
     startTimer(10);
     intervalId = setInterval(displayQuestions, 10 * 1000);
 
