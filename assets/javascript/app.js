@@ -38,10 +38,9 @@ var triviagame = {
     ]
 }
 
-
+//displays the question one at the time to the length of the questions array
 function displayQuestions() {
     clear();
-    console.log("index "+index);
 
     $("#question").text(triviagame.questionsArray[index].question);
     $("#answers").empty();
@@ -68,6 +67,7 @@ function displayQuestions() {
             displayAnswer(correctText, "bummer");
         }
 
+        //if not at the end of the array move on to the next question else display The End and stop game.
         if (index < triviagame.questionsArray.length) {
             setTimeout(displayQuestions, 2000); 
         }
@@ -107,6 +107,7 @@ function displayAnswer(correct, type) {
 
 }
 
+//option to restart game if button is clicked - reset variables and clear intervals
 $(document).on("click", "#play-game", function () {
     event.preventDefault();
     clear();
@@ -114,6 +115,7 @@ $(document).on("click", "#play-game", function () {
 });
 
 
+//keep a timer on the questions
 function startTimer(seconds) {
     console.log("starting timer");
     if (!clockRunning){
@@ -141,14 +143,14 @@ function startTimer(seconds) {
     
 }
 
+//clear the intervals
 function clear() {
-    console.log("clearing");
     clearInterval(clockInterval);
     clockRunning = false;
 }
 
+//clear variables and html before start a new game
 function playGame() {
-    console.log("in playGame function");
     triviagame.correct = 0;
     triviagame.wrong = 0;
     index = 0;
